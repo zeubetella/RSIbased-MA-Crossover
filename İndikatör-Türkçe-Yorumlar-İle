@@ -22,7 +22,7 @@ ma0(source, length, type) =>
 maTypeInput0 = input.string("WMA", title="MA Türü", options=["WMA","EMA","SMA","VWMA"], group="MA Ayarları")
 maLengthInput0 = input.int(9, title="MA Uzunluğu", group="MA Ayarları")
 
-// Ekranımızda yer alacak birinci MA için hesaplamalar.
+// Ekranımızda yer alacak ikinci MA için hesaplamalar.
 
 ma1(source, length, type) =>
     switch type
