@@ -1,4 +1,4 @@
-# RSIbased-WMA-Crossover / Türkçe Açıklama / Please scroll down for English description
+# RSIbased-MA-Crossover / Türkçe Açıklama / Please scroll down for English description
 
 Bu indikatör, belirli koşullar altında al ve sat sinyalleri üretmek amacıyla RSI (Göreceli Güç Endeksi) ve RSI bazlı iki hareketli ortalama (MA) kullanarak bir grafik oluşturur.
 
@@ -16,7 +16,7 @@ Umarım bu açıklama kodu daha iyi anlamanıza yardımcı olur.
 
 Yatırımlarınızda sadece bu indikatörü kullanmanız riskli olabilir, lütfen bu sorumluluğun farkında olun.
 
-# RSIbased-WMA-Crossover / English description
+# RSIbased-MA-Crossover / English description
 
 This indicator creates a chart using the Relative Strength Index (RSI) and RSI-based two moving averages (MA) to generate buy and sell signals under certain conditions.
 
