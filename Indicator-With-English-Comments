@@ -1,0 +1,70 @@
+// This source code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
+// Zeubetella - 27.04.2023
+
+// This section contains the identity of our indicator.
+// @version=5
+indicator(title="RSI İçinde İki WMA", shorttitle="RSI İçinde İki WMA", format=format.price, precision=2, timeframe="", timeframe_gaps=true)
+
+// The RSI values that will appear on our screen are calculated here.
+
+rsiLengthInput = input.int(14, minval=1, title="RSI Uzunluğu", group="RSI Ayarları")
+rsiSourceInput = input.source(close, "Kaynak", group="RSI Ayarları")
+
+// Calculations are made for the first MA that will appear on our screen.
+
+ma0(source, length, type) =>
+    switch type
+        "WMA" => ta.wma(source, length)
+        "EMA" => ta.ema(source, length)
+        "SMA" => ta.sma(source, length)
+        "VWMA" => ta.vwma(source, length)
+
+maTypeInput0 = input.string("WMA", title="MA Türü", options=["WMA","EMA","SMA","VWMA"], group="MA Ayarları")
+maLengthInput0 = input.int(9, title="MA Uzunluğu", group="MA Ayarları")
+
+// Calculations are made for the second MA that will appear on our screen.
+
+ma1(source, length, type) =>
+    switch type
+        "WMA" => ta.wma(source, length)
+        "EMA" => ta.ema(source, length)
+        "SMA" => ta.sma(source, length)
+        "VWMA" => ta.vwma(source, length)
+
+maTypeInput1 = input.string("WMA", title="MA Türü", options=["WMA","EMA","SMA","VWMA"], group="MA Ayarları")
+maLengthInput1 = input.int(15, title="MA Uzunluğu", group="MA Ayarları")
+
+// RSI + MA is calculated here by writing the calculation variables defined above in their respective places.
+
+rsi = ta.rsi(close, 14)
+rsiMA0 = ma0(rsi, maLengthInput0, maTypeInput0)
+rsiMA1 = ma1(rsi, maLengthInput1, maTypeInput1)
+
+// The three lines that we will see on the screen are drawn here.
+
+plot(rsi, "RSI", color=#7E57C2)
+plot(rsiMA0, "RSI-based MA0", color=color.yellow)
+plot(rsiMA1, "RSI-based MA1", color=color.rgb(208, 208, 208))
+
+// This is the part that displays the oversold-rsi65-midline-rsi35-overbought regions on the RSI chart and creates the background.
+
+rsiUpperBand = hline(70, "RSI Upper Band", color=#787B86)
+hline(35, "RSI Middle Band", color=color.new(#787B86, 50))
+hline(65, "RSI Middle Band", color=color.new(#787B86, 65))
+rsiLowerBand = hline(30, "RSI Lower Band", color=#787B86)
+fill(rsiUpperBand, rsiLowerBand, color=color.rgb(126, 87, 194, 90), title="RSI Background Fill")
+
+// Crossovers are detected here by conditioning
+
+condbuy = ta.crossover(rsiMA0, rsiMA1) and ta.rsi(close, 14) <= 35
+
+condsell = ta.crossunder(rsi , rsiMA1) and ta.rsi(close, 14) >= 65
+
+// The detected intersections are drawn here according to the conditions.
+
+plotshape(condbuy ? rsi : na, color=color.new(color.green, 0), location=location.absolute, style=shape.triangleup, size=size.small, offset=0)
+
+plotshape(condsell ? rsi : na, color=color.rgb(233 , 30, 99), location=location.absolute, style=shape.triangledown, size=size.small, offset=0)
+
+// End of the code. 
+// Bon appétit...
